@@ -10,6 +10,7 @@ logger = logging.getLogger("helpdesk.database")
 logging.basicConfig(level=logging.INFO)
 
 MONGODB_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017/smart_helpdesk")
+MONGODB_DB_NAME = os.getenv("MONGODB_DB_NAME", "smart_helpdesk")
 
 # ----------------------------------------------------
 # IN-MEMORY MOCK MONGODB DATABASE FOR FALLBACK
@@ -193,14 +194,15 @@ is_mock_db = False
 
 try:
     logger.info(f"Connecting to MongoDB at: {MONGODB_URI}")
-    # Set a short timeout so it fails quickly if server is offline
-    client = AsyncIOMotorClient(MONGODB_URI, serverSelectionTimeoutMS=2000)
-    # Check connection
-    # We will verify the connection inside startup block.
-    # To be safe, we also set up fallback
-    db = client.get_default_database()
-    if db is None or db.name == "test":
-        db = client["smart_helpdesk"]
+    client = AsyncIOMotorClient(MONGODB_URI, serverSelectionTimeoutMS=5000)
+    try:
+        db = client.get_default_database()
+        if db is None:
+            db = client[MONGODB_DB_NAME]
+    except Exception:
+        # Atlas URIs without a default database name in the path
+        db = client[MONGODB_DB_NAME]
+    logger.info(f"Using MongoDB database: {db.name}")
 except Exception as e:
     logger.warning(f"MongoDB connection failed: {e}. Falling back to in-memory mock database.")
     db = MockDatabase()

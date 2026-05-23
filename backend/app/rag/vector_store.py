@@ -89,7 +89,10 @@ if CHROMA_AVAILABLE and SENTENCE_TRANSFORMERS_AVAILABLE:
         embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
         
         # Create persistent Chroma Client
-        chroma_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "chroma_db_dir")
+        default_chroma_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "chroma_db_dir"
+        )
+        chroma_path = os.getenv("CHROMA_PERSIST_DIR", default_chroma_path)
         os.makedirs(chroma_path, exist_ok=True)
         logger.info(f"Connecting to ChromaDB at: {chroma_path}")
         

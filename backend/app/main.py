@@ -2,6 +2,9 @@ import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from app.database.connection import check_db_connection, get_collection
 from app.routes import auth, tickets, analytics
@@ -13,11 +16,25 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configure CORS for local development (React dev server runs on port 5173)
+def _get_cors_origins():
+    """Build CORS allowlist from env (production) or wildcard (local default)."""
+    origins = []
+    cors_origins = os.getenv("CORS_ORIGINS", "").strip()
+    if cors_origins:
+        origins.extend(o.strip() for o in cors_origins.split(",") if o.strip())
+    frontend_url = os.getenv("FRONTEND_URL", "").strip()
+    if frontend_url:
+        origins.append(frontend_url.rstrip("/"))
+    if not origins:
+        return ["*"]
+    return list(dict.fromkeys(origins))
+
+
+_cors_origins = _get_cors_origins()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, restrict this to the frontend URL
-    allow_credentials=True,
+    allow_origins=_cors_origins,
+    allow_credentials="*" not in _cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )

@@ -79,6 +79,12 @@ To allow developers to run, inspect, and evaluate the application instantly:
 
 ---
 
+## Production Deployment
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for Render (backend) + Vercel (frontend) setup, environment variables, and checklists.
+
+---
+
 ## How to Set Up & Run
 
 ### Prerequisites

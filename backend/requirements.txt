@@ -1,17 +1,31 @@
+# Core API
 fastapi==0.111.0
-uvicorn==0.30.1
-pymongo==4.7.2
-motor==3.4.0
+uvicorn[standard]==0.30.1
+python-multipart==0.0.9
+python-dotenv==1.0.1
+
+# Data validation & settings
 pydantic==2.7.1
 pydantic-settings==2.2.1
+email-validator==2.1.1
+
+# Database
+pymongo==4.7.2
+motor==3.4.0
+
+# Authentication
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
-python-multipart==0.0.9
+bcrypt==4.1.3
+
+# LLM & RAG
 groq==0.9.0
 langchain==0.2.1
 langchain-community==0.2.1
-sentence-transformers==2.7.0
 chromadb==0.5.0
+sentence-transformers==2.7.0
+
+# ML / vector utilities
 numpy==1.26.4
-python-dotenv==1.0.1
-bcrypt==4.1.3
+scikit-learn==1.4.2
+pandas==2.2.2

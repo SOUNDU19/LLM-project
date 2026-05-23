@@ -1,9 +1,41 @@
+# Python
 venv/
-node_modules/
-.env
+.venv/
+env/
 __pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
 dist/
 build/
-*.pyc
-.cache/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Secrets & local env
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+frontend/.env.local
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# ChromaDB / vector store (local runtime data)
 .chromadb/
+backend/app/chroma_db_dir/
+backend/chroma_db_dir/
+**/chroma_db_dir/
+
+# Logs & caches
+*.log
+.cache/
+.npm/
