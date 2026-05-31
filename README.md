@@ -185,3 +185,7 @@ When you open `http://localhost:5173`, the system auto-seeds two default account
 2. Submit a complaint regarding database slow-downs:
    `Database query timeouts are causing loading screens to freeze on the client dashboard page.`
 3. Open the ticket details page. Inspect the **"AI Suggested Solution (RAG Synthesized)"**. The engine retrieves the past resolved ticket about indexes and query optimizations from ChromaDB, creating a matching resolution!
+
+
+<h1>demo vedio</h1>
+<vedio src =""control></vedio>
